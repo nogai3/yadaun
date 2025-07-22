@@ -1,6 +1,7 @@
 local script_name = "{ff00fb}Yadaun "
 local scriptVersion = "{ff00fb}1.1 "
 local script_tag = "{ff00fb}[YADAUN.LUA]: "
+local script_author = "glackus (LighSync Games)"
 
 require("lib.moonloader");
 local imgui = require('mimgui');
@@ -44,6 +45,10 @@ local config_files = {
   {
     url = "https://nogai3.github.io/LighSync/assets/yadaun/config/servercommands.ini",
     file_name = "servercommands.ini"
+  },
+  {
+    url = "https://nogai3.github.io/LighSync/assets/ydaun/config/mainsettings.ini",
+    file_name = "mainsettings.ini"
   }
 }
 
@@ -81,15 +86,17 @@ local weapons = {
 local rp_guns_enabled = false;
 local last_weapon_id = nil;
 local last_weapon_name = nil;
-local gun_rp_config = {}
 local rp_cooldown = 1500;
 
-local server_commands_rp_config = {}
-
-local nick = "Глеб Устименко"
-local faction = "ФБР"
-local rank = "Младший агент"
+local nick = "Глеб Устименко";
+local faction = "ФБР";
+local rank = "Младший агент";
 local current_target = nil;
+
+-- Settings
+local gun_rp_config = {};
+local server_commands_rp_config = {};
+local main_settings_config = {};
 
 --[[local purple = ff00fb;
 local vipadv = fd446f;
@@ -104,6 +111,7 @@ function main()
     downloadHandler("config", config_files);
     gun_rp_config = inicfg.load(nil, config_path .. "gunsettings.ini");;
     server_commands_rp_config = inicfg.load(nil, config_path .. "servercommands.ini");
+    main_settings_config = inicfg.load(nil, config_path .. "mainsettings.ini");
     sampRegisterChatCommand("poshelnahuy", function()
         sampAddChatMessage(script_tag .. "{ffffff}ПОШЁЛ НАХУЙ ПИДОРАС!!!", -1);
         scary_active = true;
@@ -252,6 +260,7 @@ function poslat_nahuy(id, chatType)
   else
     local nick = sampGetPlayerNickname(id);
     nick = string.gsub(nick, "_", " ");
+    local poshelnahuy_text = 
     local chatTypes = {
       nothing = function() sampSendChat(nick .. ", пошёл нахуй!") end,
       vr = function() sampSendChat("/vr " .. nick .. ", пошёл нахуй!") end,
