@@ -1,5 +1,5 @@
 local script_name = "{ff00fb}Yadaun "
-local scriptVersion = "{ff00fb}1.2 "
+local scriptVersion = "{ff00fb}1.1 "
 local script_tag = "{ff00fb}[YADAUN.LUA]: "
 
 require("lib.moonloader");
