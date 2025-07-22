@@ -51,7 +51,7 @@ local tajik_image = renderLoadTextureFromFile(script_path .. "tajik_image.png");
 local tajik_sound = loadAudioStream(script_path .. "tajik_sound.mp3"); assert(tajik_image, "Sound not found!");
 
 local accent_enabled = false;
-local accent = "[ĞÑˆĞ¾Ñ‚Ğ¸ĞºĞ¾Ğ²ÑĞºĞ¸Ğ¹ Ğ°ĞºÑ†ĞµĞ½Ñ‚]: ";
+local accent = "[Àøîòèêîâñêèé àêöåíò]: ";
 
 local screen_width, screen_height = getScreenResolution();
 local weapons = {
@@ -86,9 +86,9 @@ local rp_cooldown = 1500;
 
 local server_commands_rp_config = {}
 
-local nick = "Ğ“Ğ»ĞµĞ± Ğ£ÑÑ‚Ğ¸Ğ¼ĞµĞ½ĞºĞ¾"
-local faction = "Ğ¤Ğ‘Ğ "
-local rank = "ĞœĞ»Ğ°Ğ´ÑˆĞ¸Ğ¹ Ğ°Ğ³ĞµĞ½Ñ‚"
+local nick = "Ãëåá Óñòèìåíêî"
+local faction = "ÔÁĞ"
+local rank = "Ìëàäøèé àãåíò"
 local current_target = nil;
 
 --[[local purple = ff00fb;
@@ -99,18 +99,18 @@ local premium = f345fc;
 function main()
     while not isSampAvailable() do wait(0) end
     if (not isSampLoaded() or not isSampfuncsLoaded()) then return end
-    print(script_name .. script_tag .. "Ğ•Ğ‘ĞĞ¢Ğ¬ ĞšĞĞš ĞĞ ĞšĞ Ğ£Ğ¢Ğ Ğ—ĞĞ“Ğ Ğ£Ğ–Ğ•Ğ!!!");
+    print(script_name .. script_tag .. "ÅÁÀÒÜ ÊÀÊ ÎÍ ÊĞÓÒÎ ÇÀÃĞÓÆÅÍ!!!");
     downloadHandler("files", files);
     downloadHandler("config", config_files);
     gun_rp_config = inicfg.load(nil, config_path .. "gunsettings.ini");;
     server_commands_rp_config = inicfg.load(nil, config_path .. "servercommands.ini");
     sampRegisterChatCommand("poshelnahuy", function()
-        sampAddChatMessage(script_tag .. "{ffffff}ĞŸĞĞ¨ĞĞ› ĞĞĞ¥Ğ£Ğ™ ĞŸĞ˜Ğ”ĞĞ ĞĞ¡!!!", -1);
+        sampAddChatMessage(script_tag .. "{ffffff}ÏÎØ¨Ë ÍÀÕÓÉ ÏÈÄÎĞÀÑ!!!", -1);
         scary_active = true;
         scary_timer = os.clock() + 4.5;
         setAudioStreamState(tajik_sound, ASState.PLAY);
     end);
-    sampRegisterChatCommand("aboutyadaun", function() sampAddChatMessage(script_tag .. "{ffffff}Ğ¡ĞšĞ Ğ˜ĞŸĞ¢ Ğ¯Ğ”ĞĞ£Ğ.Ğ›Ğ£Ğ! ĞĞ’Ğ¢ĞĞ : Ğ“Ğ›ĞĞšĞ£Ğ¡. Ğ’Ğ˜Ğ Ğ¡Ğ˜Ğ¯: " .. scriptVersion .. "{ffffff} Ğ¡ĞĞœĞ«Ğ™ ĞĞ¥Ğ£Ğ•ĞĞĞ«Ğ™ Ğ¡ĞšĞ Ğ˜ĞŸĞ¢ ĞĞ Ğ”Ğ˜ĞšĞĞœ Ğ¡Ğ ĞĞœĞŸĞ•!!!", -1); end);
+    sampRegisterChatCommand("aboutyadaun", function() sampAddChatMessage(script_tag .. "{ffffff}ÑÊĞÈÏÒ ßÄÀÓÍ.ËÓÀ! ÀÂÒÎĞ: ÃËÀÊÓÑ. ÂÈĞÑÈß: " .. scriptVersion .. "{ffffff} ÑÀÌÛÉ ÀÕÓÅÍÍÛÉ ÑÊĞÈÏÒ ÍÀ ÄÈÊÎÌ ÑĞÀÌÏÅ!!!", -1); end);
     sampRegisterChatCommand("poslatnahuy", function(id) poslat_nahuy(id, "nothing") end);
     sampRegisterChatCommand("poslatnahuyvr", function(id) poslat_nahuy(id, "vr") end);
     sampRegisterChatCommand("poslatnahuyb", function(id) poslat_nahuy(id, "b") end);
@@ -131,18 +131,18 @@ function main()
     sampRegisterChatCommand("settarget", function(id)
       id = tonumber(id);
       if id == nil or id < 0 or id > 999 then
-        sampAddChatMessage(script_tag.. "{FFFFFF}Ğ¢Ğ« Ğ§Ğ¢Ğ Ğ’ĞĞĞ‘Ğ©Ğ• ĞšĞĞĞ§Ğ•ĞĞĞ«Ğ™ ĞĞ£Ğ¢Ğ˜Ğ¡Ğ¢???? ĞĞ™Ğ”Ğ˜ Ğ”ĞĞ›Ğ–Ğ•Ğ Ğ‘Ğ«Ğ¢Ğ¬ >= 0 Ğ˜ <= 999 ĞĞ£Ğ¢Ğ¯Ğ Ğ", -1);
+        sampAddChatMessage(script_tag.. "{FFFFFF}ÒÛ ×ÒÎ ÂÎÎÁÙÅ ÊÎÍ×ÅÍÍÛÉ ÀÓÒÈÑÒ???? ÀÉÄÈ ÄÎËÆÅÍ ÁÛÒÜ >= 0 È <= 999 ÀÓÒßĞÀ", -1);
       elseif not sampIsPlayerConnected(id) then
-        sampAddChatMessage(script_tag .. "{FFFFFF}Ğ˜Ğ“Ğ ĞĞš ĞĞ¤Ğ¤Ğ›ĞĞ™Ğ ĞĞĞ¥Ğ£Ğ™!", -1);
+        sampAddChatMessage(script_tag .. "{FFFFFF}ÈÃĞÎÊ ÎÔÔËÀÉÍ ÍÀÕÓÉ!", -1);
       end
       current_target = id; 
-      local parsed_tag = parseTags(", Ğ ĞĞ˜Ğš Ğ•Ğ: !targetrnick"); 
-      sampAddChatMessage(script_tag .. "{FFFFFF}Ğ¦Ğ•Ğ›Ğ¬ Ğ£Ğ¡ĞŸĞ•Ğ¨ĞĞ Ğ£Ğ¡Ğ¢ĞĞĞĞ’Ğ›Ğ•ĞĞ!!! Ğ•Ğ ĞĞ™Ğ”Ğ˜: " .. id .. parsed_tag, -1) 
+      local parsed_tag = parseTags(", À ÍÈÊ Å¨: !targetrnick"); 
+      sampAddChatMessage(script_tag .. "{FFFFFF}ÖÅËÜ ÓÑÏÅØÍÎ ÓÑÒÀÍÎÂËÅÍÀ!!! Å¨ ÀÉÄÈ: " .. id .. parsed_tag, -1) 
     end);
     sampRegisterChatCommand("cc", function() for i = 0, 20 do sampAddChatMessage("", -1); end end);
-    sampRegisterChatCommand("test", function() sampShowDialog(1, "Ğ’Ğ¾Ğ¿Ñ€Ğ¾Ñ Ğ¶Ğ¸Ğ·Ğ½Ğ¸ Ğ¸ ÑĞ¼ĞµÑ€Ñ‚Ğ¸!", "Ğ¡Ğ¾ÑĞ°Ğ»?", "ĞŸĞ¾Ğ´Ğ²ĞµÑ€Ğ´Ğ¸Ñ‚ÑŒ", "Ğ’Ñ‹Ğ¹Ñ‚Ğ¸", 1); end);
+    sampRegisterChatCommand("test", function() sampShowDialog(1, "Âîïğîñ æèçíè è ñìåğòè!", "Ñîñàë?", "Ïîäâåğäèòü", "Âûéòè", 1); end);
     sampRegisterChatCommand("test_load", function()
-      local parsed_tag = parseTags("/b ĞŸÑ€Ğ¸Ğ²ĞµÑ‚, Ñ !nick, Ğ° ÑÑ‚Ğ¾ Ğ³Ğ¾Ğ²Ğ¾Ñ€Ğ¸Ñ‚ Ğ¼Ğ¾Ğ¹ Ğ¿Ğ°Ñ€ÑĞµÑ€ Ñ‚ĞµĞ³Ğ¾Ğ²! Ğ¢Ğ°ĞºĞ¶Ğµ Ğ²Ğ¾Ñ‚ Ğ¼Ğ¾Ğ¹: !rank Ğ¸ Ñ„Ñ€Ğ°ĞºÑ†Ğ¸Ñ: !faction");
+      local parsed_tag = parseTags("/b Ïğèâåò, ÿ !nick, à ıòî ãîâîğèò ìîé ïàğñåğ òåãîâ! Òàêæå âîò ìîé: !rank è ôğàêöèÿ: !faction");
       sampSendChat(parsed_tag);
     end);
     sampRegisterChatCommand("testcall", function(id) call(id) end);
@@ -153,7 +153,7 @@ function main()
     sampRegisterChatCommand("arrest", function(id) current_target = id; playServerCommand(id, "arrest") end);
     sampRegisterChatCommand("meg", function(id) current_target = id; playServerCommand(id, "meg") end);
     sampRegisterChatCommand("usedrugs", function(id) current_target = id; playServerCommand(id, "usedrugs") end);
-    sampAddChatMessage(script_tag .. "{ffffff}Ğ¡ĞšĞ Ğ˜ĞŸĞ¢ Ğ¯Ğ”ĞĞ£Ğ.Ğ›Ğ£Ğ Ğ—ĞĞ“Ğ Ğ£Ğ—Ğ˜Ğ’Ğ¡Ğ¯!!! Ğ’Ğ˜Ğ Ğ¡Ğ˜Ğ¯: " .. scriptVersion .. "{ffffff}Ğ¡ĞĞœĞ«Ğ™ ĞĞ¥Ğ£Ğ•ĞĞĞ«Ğ™ Ğ¡ĞšĞ Ğ˜ĞŸĞ¢ ĞĞ Ğ”Ğ˜ĞšĞĞœ Ğ¡Ğ ĞĞœĞŸĞ•" , -1);
+    sampAddChatMessage(script_tag .. "{ffffff}ÑÊĞÈÏÒ ßÄÀÓÍ.ËÓÀ ÇÀÃĞÓÇÈÂÑß!!! ÂÈĞÑÈß: " .. scriptVersion .. "{ffffff}ÑÀÌÛÉ ÀÕÓÅÍÍÛÉ ÑÊĞÈÏÒ ÍÀ ÄÈÊÎÌ ÑĞÀÌÏÅ" , -1);
     
   while true do
         if scary_active then
@@ -176,12 +176,12 @@ function downloadHandler(type, filevar)
       if v['file_name'] and v['url'] then
         local path = config_path .. v['file_name']
         if not doesFileExist(path) then
-          sampAddChatMessage(script_tag .. "{FFFFFF}Ğ—ĞĞ“Ğ Ğ£Ğ–ĞĞ® ĞšĞĞĞ¤Ğ˜Ğ“ Ğ¡ Ğ¡Ğ•Ğ Ğ’Ğ•Ğ Ğ Ğ›Ğ˜Ğ“Ğ¥Ğ¡Ğ£ĞĞš: " .. v['file_name'], -1)
+          sampAddChatMessage(script_tag .. "{FFFFFF}ÇÀÃĞÓÆÀŞ ÊÎÍÔÈÃ Ñ ÑÅĞÂÅĞÀ ËÈÃÕÑÓÍÊ: " .. v['file_name'], -1)
           downloadUrlToFile(v['url'], path, function(id, success, response)
             if success then
-              sampAddChatMessage(script_tag .. "{FFFFFF}Ğ—ĞĞ“Ğ Ğ£Ğ—Ğ˜Ğ› ĞĞĞ¥Ğ£Ğ™: " .. v['file_name'], -1)
+              sampAddChatMessage(script_tag .. "{FFFFFF}ÇÀÃĞÓÇÈË ÍÀÕÓÉ: " .. v['file_name'], -1)
             else
-              sampAddChatMessage(script_tag .. "{FFFFFF}ĞŸĞ˜Ğ—Ğ”Ğ Ğ›ĞĞŸĞĞ¢Ğ ĞĞ¨Ğ˜Ğ‘ĞšĞ Ğ‘Ğ›Ğ¯Ğ¯Ğ¯Ğ¯Ğ¯Ğ¯Ğ¯: " .. v['file_name'], -1)
+              sampAddChatMessage(script_tag .. "{FFFFFF}ÏÈÇÄÀ ËÎÏÀÒÀ ÎØÈÁÊÀ ÁËßßßßßßß: " .. v['file_name'], -1)
             end
           end)
         end
@@ -193,12 +193,12 @@ function downloadHandler(type, filevar)
       if v['file_name'] and v['url'] then
         local path = script_path .. v['file_name']
         if not doesFileExist(path) then
-          sampAddChatMessage(script_tag .. "{FFFFFF}Ğ—ĞĞ“Ğ Ğ£Ğ–ĞĞ® Ğ¤ĞĞ™Ğ› Ğ¡ Ğ¡Ğ•Ğ Ğ’Ğ•Ğ Ğ Ğ›Ğ˜Ğ“Ğ¥Ğ¡Ğ£ĞĞš: " .. v['file_name'], -1)
+          sampAddChatMessage(script_tag .. "{FFFFFF}ÇÀÃĞÓÆÀŞ ÔÀÉË Ñ ÑÅĞÂÅĞÀ ËÈÃÕÑÓÍÊ: " .. v['file_name'], -1)
           downloadUrlToFile(v['url'], path, function(id, success, response)
             if success then
-              sampAddChatMessage(script_tag .. "{FFFFFF}Ğ—ĞĞ“Ğ Ğ£Ğ—Ğ˜Ğ› ĞĞĞ¥Ğ£Ğ™: " .. v['file_name'], -1)
+              sampAddChatMessage(script_tag .. "{FFFFFF}ÇÀÃĞÓÇÈË ÍÀÕÓÉ: " .. v['file_name'], -1)
             else
-              sampAddChatMessage(script_tag .. "{FFFFFF}ĞŸĞ˜Ğ—Ğ”Ğ Ğ›ĞĞŸĞĞ¢Ğ ĞĞ¨Ğ˜Ğ‘ĞšĞ Ğ‘Ğ›Ğ¯Ğ¯Ğ¯Ğ¯Ğ¯Ğ¯Ğ¯: " .. v['file_name'], -1)
+              sampAddChatMessage(script_tag .. "{FFFFFF}ÏÈÇÄÀ ËÎÏÀÒÀ ÎØÈÁÊÀ ÁËßßßßßßß: " .. v['file_name'], -1)
             end
           end)
         end
@@ -206,8 +206,8 @@ function downloadHandler(type, filevar)
     end
 
   else
-    sampAddChatMessage(script_tag .. "{FFFFFF}ĞĞ• Ğ•Ğ‘Ğ£ Ğ§Ğ¢Ğ Ğ—Ğ Ğ¢Ğ˜ĞŸ Ğ¤ĞĞ™Ğ›Ğ Ğ•Ğ‘ĞĞ¢Ğ¬!", -1)
-    print(script_tag .. "{FFFFFF}ĞĞ• Ğ•Ğ‘Ğ£ Ğ§Ğ¢Ğ Ğ—Ğ Ğ¢Ğ˜ĞŸ Ğ¤ĞĞ™Ğ›Ğ Ğ•Ğ‘ĞĞ¢Ğ¬!!!!!!!")
+    sampAddChatMessage(script_tag .. "{FFFFFF}ÍÅ ÅÁÓ ×ÒÎ ÇÀ ÒÈÏ ÔÀÉËÀ ÅÁÀÒÜ!", -1)
+    print(script_tag .. "{FFFFFF}ÍÅ ÅÁÓ ×ÒÎ ÇÀ ÒÈÏ ÔÀÉËÀ ÅÁÀÒÜ!!!!!!!")
   end
 end
 
@@ -229,8 +229,8 @@ end
 
 function playServerCommand(id, action_key)
   id = tonumber(id);
-  if id == nil or id < 0 or id > 999 then sampAddChatMessage(script_tag .. "{FFFFFF}Ğ¢Ğ« Ğ§Ğ¢Ğ Ğ’ĞĞĞ‘Ğ©Ğ• ĞšĞĞĞ§Ğ•ĞĞĞ«Ğ™ ĞĞ£Ğ¢Ğ˜Ğ¡Ğ¢???? ĞĞ™Ğ”Ğ˜ Ğ”ĞĞ›Ğ–Ğ•Ğ Ğ‘Ğ«Ğ¢Ğ¬ >= 0 Ğ˜ <= 999 ĞĞ£Ğ¢Ğ¯Ğ Ğ", -1);
-  elseif not sampIsPlayerConnected(id) then sampAddChatMessage(script_tag .. "{FFFFFF}Ğ˜Ğ“Ğ ĞĞš ĞĞ¤Ğ¤Ğ›ĞĞ™Ğ ĞĞĞ¥Ğ£Ğ™!", -1);
+  if id == nil or id < 0 or id > 999 then sampAddChatMessage(script_tag .. "{FFFFFF}ÒÛ ×ÒÎ ÂÎÎÁÙÅ ÊÎÍ×ÅÍÍÛÉ ÀÓÒÈÑÒ???? ÀÉÄÈ ÄÎËÆÅÍ ÁÛÒÜ >= 0 È <= 999 ÀÓÒßĞÀ", -1);
+  elseif not sampIsPlayerConnected(id) then sampAddChatMessage(script_tag .. "{FFFFFF}ÈÃĞÎÊ ÎÔÔËÀÉÍ ÍÀÕÓÉ!", -1);
   end
   local action = server_commands_rp_config.ServerCommands[action_key];
   if action and action ~= "" then
@@ -247,25 +247,25 @@ end
 
 function poslat_nahuy(id, chatType)
   id = tonumber(id);
-  if id == nil or id < 0 or id > 999 then sampAddChatMessage(script_tag .. "{ffffff}Ğ”ĞĞ›Ğ‘ĞĞ•Ğ‘ Ğ˜Ğ¡ĞŸĞĞ›Ğ¬Ğ—Ğ£Ğ™ /poslatnahuy Ğ¸ ID ĞĞĞ¥Ğ£Ğ™", -1);
-  elseif not sampIsPlayerConnected(id) then sampAddChatMessage(script_tag .. "{FFFFFF}Ğ¢Ğ« ĞšĞĞĞ§Ğ•ĞĞĞ«Ğ™???? Ğ˜Ğ“Ğ ĞĞš ĞĞ¤Ğ¤Ğ›ĞĞ™Ğ ĞĞĞ¥Ğ£Ğ™!", -1);
+  if id == nil or id < 0 or id > 999 then sampAddChatMessage(script_tag .. "{ffffff}ÄÀËÁÀÅÁ ÈÑÏÎËÜÇÓÉ /poslatnahuy è ID ÍÀÕÓÉ", -1);
+  elseif not sampIsPlayerConnected(id) then sampAddChatMessage(script_tag .. "{FFFFFF}ÒÛ ÊÎÍ×ÅÍÍÛÉ???? ÈÃĞÎÊ ÎÔÔËÀÉÍ ÍÀÕÓÉ!", -1);
   else
     local nick = sampGetPlayerNickname(id);
     nick = string.gsub(nick, "_", " ");
     local chatTypes = {
-      nothing = function() sampSendChat(nick .. ", Ğ¿Ğ¾ÑˆÑ‘Ğ» Ğ½Ğ°Ñ…ÑƒĞ¹!") end,
-      vr = function() sampSendChat("/vr " .. nick .. ", Ğ¿Ğ¾ÑˆÑ‘Ğ» Ğ½Ğ°Ñ…ÑƒĞ¹!") end,
-      b = function() sampSendChat("/b " .. nick .. ", Ğ¿Ğ¾ÑˆÑ‘Ğ» Ğ½Ğ°Ñ…ÑƒĞ¹!") end,
-      s = function() sampSendChat("/s " .. nick .. ", Ğ¿Ğ¾ÑˆÑ‘Ğ» Ğ½Ğ°Ñ…ÑƒĞ¹!") end,
-      r = function() sampSendChat("/r " .. nick .. ", Ğ¿Ğ¾ÑˆÑ‘Ğ» Ğ½Ğ°Ñ…ÑƒĞ¹!") end,
-      rb = function() sampSendChat("/rb " .. nick .. ", Ğ¿Ğ¾ÑˆÑ‘Ğ» Ğ½Ğ°Ñ…ÑƒĞ¹!") end,
-      m = function() sampSendChat("/m " .. nick .. ", Ğ¿Ğ¾ÑˆÑ‘Ğ» Ğ½Ğ°Ñ…ÑƒĞ¹!") end,
-      g = function() sampSendChat("/g " .. nick .. ", Ğ¿Ğ¾ÑˆÑ‘Ğ» Ğ½Ğ°Ñ…ÑƒĞ¹!") end,
-      j = function() sampSendChat("/j " .. nick .. ", Ğ¿Ğ¾ÑˆÑ‘Ğ» Ğ½Ğ°Ñ…ÑƒĞ¹!") end,
-      jb = function() sampSendChat("/jb " .. nick .. ", Ğ¿Ğ¾ÑˆÑ‘Ğ» Ğ½Ğ°Ñ…ÑƒĞ¹!") end,
-      gd = function() sampSendChat("/gd " .. nick .. ", Ğ¿Ğ¾ÑˆÑ‘Ğ» Ğ½Ğ°Ñ…ÑƒĞ¹!") end,
-      fam = function() sampSendChat("/fam " .. nick .. ", Ğ¿Ğ¾ÑˆÑ‘Ğ» Ğ½Ğ°Ñ…ÑƒĞ¹!") end,
-      al = function() sampSendChat("/al " .. nick .. ", Ğ¿Ğ¾ÑˆÑ‘Ğ» Ğ½Ğ°Ñ…ÑƒĞ¹!") end
+      nothing = function() sampSendChat(nick .. ", ïîø¸ë íàõóé!") end,
+      vr = function() sampSendChat("/vr " .. nick .. ", ïîø¸ë íàõóé!") end,
+      b = function() sampSendChat("/b " .. nick .. ", ïîø¸ë íàõóé!") end,
+      s = function() sampSendChat("/s " .. nick .. ", ïîø¸ë íàõóé!") end,
+      r = function() sampSendChat("/r " .. nick .. ", ïîø¸ë íàõóé!") end,
+      rb = function() sampSendChat("/rb " .. nick .. ", ïîø¸ë íàõóé!") end,
+      m = function() sampSendChat("/m " .. nick .. ", ïîø¸ë íàõóé!") end,
+      g = function() sampSendChat("/g " .. nick .. ", ïîø¸ë íàõóé!") end,
+      j = function() sampSendChat("/j " .. nick .. ", ïîø¸ë íàõóé!") end,
+      jb = function() sampSendChat("/jb " .. nick .. ", ïîø¸ë íàõóé!") end,
+      gd = function() sampSendChat("/gd " .. nick .. ", ïîø¸ë íàõóé!") end,
+      fam = function() sampSendChat("/fam " .. nick .. ", ïîø¸ë íàõóé!") end,
+      al = function() sampSendChat("/al " .. nick .. ", ïîø¸ë íàõóé!") end
     }
     if chatTypes[chatType] then
       chatTypes[chatType]()
@@ -276,7 +276,7 @@ end
 function call(id)
   id = tonumber(id);
   if not id then
-    sampAddChatMessage(script_tag .. "{FFFFFF}ID ĞĞ• Ğ£ĞšĞĞ—ĞĞ Ğ•Ğ‘Ğ›ĞĞĞ˜Ğ©Ğ•!!!", -1);
+    sampAddChatMessage(script_tag .. "{FFFFFF}ID ÍÅ ÓÊÀÇÀÍ ÅÁËÀÍÈÙÅ!!!", -1);
     return
   end
   target_call_id = id;
@@ -284,11 +284,11 @@ function call(id)
 end
 
 function sampev.onShowDialog(dialogId, style, title, button1, button2, text)
-  if title:find("Ğ¢ĞµĞ»ĞµÑ„Ğ¾Ğ½Ğ½Ğ°Ñ ĞºĞ½Ğ¸Ğ³Ğ°") and text:find("ĞĞ¾Ğ¼ĞµÑ€ Ñ‚ĞµĞ»ĞµÑ„Ğ¾Ğ½Ğ°") then
+  if title:find("Òåëåôîííàÿ êíèãà") and text:find("Íîìåğ òåëåôîíà") then
     sampSendDialogResponse(dialogId, 1, 0, "");
     return false;
   end
-  if not dialog_eat_processed and title:find("ĞšÑƒÑˆĞ°Ñ‚ÑŒ") and text:find("Ğ§Ğ¸Ğ¿ÑÑ‹") then
+  if not dialog_eat_processed and title:find("Êóøàòü") and text:find("×èïñû") then
     dialog_eat_processed = true;
     sampSendDialogResponse(dialogId, 1, 0, "");
     return false;
@@ -301,9 +301,9 @@ function sampev.onServerMessage(color, text)
   number = tonumber(number);
 
   if nick and id and number then
-    sampAddChatMessage(string.format("{FF00FF}[DEBUG]: {FFFFFF}ĞĞ¸Ğº: %s | ID: %d | ĞĞ¾Ğ¼ĞµÑ€: %d", nick, id, number), -1)
+    sampAddChatMessage(string.format("{FF00FF}[DEBUG]: {FFFFFF}Íèê: %s | ID: %d | Íîìåğ: %d", nick, id, number), -1)
     if target_call_id and id == target_call_id then
-      sampAddChatMessage(script_tag .. "{00FF00}Ğ—Ğ²Ğ¾Ğ½Ñ " .. nick .. " Ğ¿Ğ¾ Ğ½Ğ¾Ğ¼ĞµÑ€Ñƒ " .. number, -1);
+      sampAddChatMessage(script_tag .. "{00FF00}Çâîíş " .. nick .. " ïî íîìåğó " .. number, -1);
       sampSendChat("/call " .. number);
       target_call_id = nil;
     end
