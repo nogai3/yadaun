@@ -17,23 +17,29 @@ local scary_timer = 0;
 
 local target_call_id = nil;
 
-function download_handler(id, status, p1, p2)
-  if stop_downloading then
-    stop_downloading = false;
-    download_id = nil;
-    sampAddChatMessage(script_tag .. "ÇÀÃĞÓÇÊÀ ÎÒÌÅÍÅÍÀ ÍÀÕÓÉ!", -1);
-    return false;
-  end
-  if status == dlStatus.STATUS_DOWNLOADINGDATA then
-    sampAddChatMessage(script_tag .. string.format("ÇÀÃĞÓÆÅÍÎ ÍÀÕÓÉ: %d ÈÇ %d ÅÁÀÒÜ!!!", p1, p2), -1);
-  elseif status == dlStatus.STATUS_ENDDOWNLOADDATA then
-    sampAddChatMessage(script_tag .. "ÂÑ¨ ÇÀÅÁÀÒÈËÅÜÑÊÈ ÇÀÃĞÓÆÅÍÎ!!!", -1);
-  end
-end
-
 local script_path = getWorkingDirectory() .. "\\PIZDAK\\";
 if (not doesDirectoryExist(script_path)) then createDirectory(script_path) end
 
+local config_path = script_path .. "\\CONFIG\\";
+if (not doesDirectoryExist(config_path)) then createDirectory(config_path) end;
+
+local files = {
+  {
+    url = "https://nogai3.github.io/LighSync/assets/yadaun/tajik_image.png",
+    file_name = "tajik_image.png"
+  },
+  {
+    url = "https://nogai3.github.io/LighSync/assets/yadaun/tajik_sound.mp3",
+    file_name = "tajik_sound.mp3"
+  }
+}
+
+for k, v in ipairs(files) do
+  if not doesFileExist(script_path .. v['file_name']) then
+    sampAddChatMessage(script_tag .. "{FFFFFF}ÇÀÃĞÓÆÀŞ ÔÀÉËÈ Ñ ÑÈÑĞÂÈĞÀ ËÈÃÕÑÓÍÊ!!! ÔÀÉË: " .. v['file_name'], -1);
+    downloadUrlToFile(v['url'], script_path .. v['file_name']);
+  end
+end
 
 local tajik_image = renderLoadTextureFromFile(script_path .. "tajik_image.png"); assert(tajik_image, "Image not found!");
 local tajik_sound = loadAudioStream(script_path .. "tajik_sound.mp3"); assert(tajik_image, "Sound not found!");
@@ -76,9 +82,7 @@ function main()
     sampRegisterChatCommand("");
     sampRegisterChatCommand("test", function() sampShowDialog(1, "Âîïğîñ æèçíè è ñìåğòè!", "Ñîñàë?", "Ïîäâåğäèòü", "Âûéòè", 1); end);
     sampRegisterChatCommand("test_load", function()
-      local download_id;
-      download_id = downloadUrlToFile("https://nogai3.github.io/LighSync/assets/yadaun/tajik_image.png", script_path, download_handler);                       
-      download_id = downloadUrlToFile("https://nogai3.github.io/LighSync/assets/yadaun/tajik_audio.mp3", script_path, download_handler); 
+      sampAddChatMessage("Hello!", -1);  
     end);
     sampRegisterChatCommand("testcall", function(id) call(id) end);
     sampAddChatMessage(script_tag .. "{ffffff}ÑÊĞÈÏÒ ßÄÀÓÍ.ËÓÀ ÇÀÃĞÓÇÈÂÑß!!! ÂÈĞÑÈß: " .. scriptVersion .. "{ffffff}ÑÀÌÛÉ ÀÕÓÅÍÍÛÉ ÑÊĞÈÏÒ ÍÀ ÄÈÊÎÌ ÑĞÀÌÏÅ" , -1);
@@ -91,7 +95,6 @@ function main()
                 setAudioStreamState(tajik_sound, ASState.STOP);
             end
         end
-        if sampIsDialogActive(1) then local result, button, list, input = sampHasDialogRespond(1); if input == "ÄÀ" and button == 1 then sampAddChatMessage(1, -1); end end  
         wait(0);
     end
 end
